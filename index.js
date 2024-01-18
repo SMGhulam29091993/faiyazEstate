@@ -20,6 +20,10 @@ app.use(morgan("dev"));
 
 
 
+
+app.use("/", require("./routes"));
+
+
 app.listen(PORT, (err)=>{
     if(err){console.log("Error in running the server".bgRed);};
     console.log(`The server is up and running on PORT : ${PORT}`.bgYellow );
