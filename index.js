@@ -5,6 +5,7 @@ require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
 PORT = 8000 || process.env.PORT;
+const db = require("./config/mongoose");
 
 // rest
 const app = express();
@@ -21,5 +22,5 @@ app.use(morgan("dev"));
 
 app.listen(PORT, (err)=>{
     if(err){console.log("Error in running the server".bgRed);};
-    console.log(`The server is up and running on PORT : ${PORT}`.bgCyan );
+    console.log(`The server is up and running on PORT : ${PORT}`.bgYellow );
 })
