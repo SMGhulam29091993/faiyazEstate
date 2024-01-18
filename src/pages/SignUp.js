@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const SignUp = ()=>{
     const [formData, setFormData] = useState({});
     const [error,setError] = useState(null);
     const [loading,setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleChange = (e)=>{
         setFormData({
@@ -28,6 +30,8 @@ export const SignUp = ()=>{
         }   
         setLoading(false)
         setError(null)
+        navigate("/sign-in")
+
        } catch (error) {
         console.log(`Error in sign-up : ${error}`);
         setLoading(false);
