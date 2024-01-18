@@ -3,9 +3,36 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 
 export const SignUp = ()=>{
+    const [formData, setFormData] = useState({});
+    const [error,setError] = useState(null);
+    const [loading,setLoading] = useState(false);
+
+    const handleChange = (e)=>{
+        setFormData({
+            ...formData,
+            [e.target.id] : e.target.value
+        })
+    }
+    
 
     const handleRegister = async (e)=>{
        e.preventDefault();
+       try {
+        setLoading(true);
+        const res = await axios.post("http://localhost:8000/api/v1/user/sign-up", formData);
+        const responseData = res.data;
+        if(responseData.success === false){
+            setError(responseData.message);
+            setLoading(false);
+            return; 
+        }   
+        setLoading(false)
+        setError(null)
+       } catch (error) {
+        console.log(`Error in sign-up : ${error}`);
+        setLoading(false);
+        setError(error.message);
+       }
     }
 
 
@@ -16,16 +43,21 @@ export const SignUp = ()=>{
                     SignUp
                 </h1>
                 <form onSubmit={handleRegister} className='flex flex-col gap-4'>
-                    <input type="text" placeholder='Username' className='border rounded-lg p-3' id='username'/>
-                    <input type="email" placeholder='Email' className='border rounded-lg p-3' id='email'/>
-                    <input type="password" placeholder='Password' className='border rounded-lg p-3' id='password'/>   
-                    <button type="submit" 
-                        className='bg-slate-700 p-3 text-white rounded-lg uppercase hover:opacity-90 disabled:opacity-70'>Sign-Up</button>
+                    <input type="text" placeholder='Username' className='border rounded-lg p-3' id='username' 
+                        onChange={handleChange} />
+                    <input type="email" placeholder='Email' className='border rounded-lg p-3' id='email' 
+                        onChange={handleChange}/>
+                    <input type="password" placeholder='Password' className='border rounded-lg p-3' id='password'
+                         onChange={handleChange}/>   
+                    <button disabled={loading} type="submit" 
+                        className='bg-slate-700 p-3 text-white rounded-lg uppercase hover:opacity-90 disabled:opacity-70'>
+                            {loading ?"Processing" : "Sign-Up"}</button>
                 </form>
                 <div className='flex gap-1 mt-2'>
                     <p>Have an account ?</p>
                     <Link to="/sign-in" ><span className='text-blue-700 font-semibold'>Sign-In</span></Link>
                 </div>
+                {error && <p className='text-red-500 mt-5'>{error}</p>}
             </div>
             
         </>
