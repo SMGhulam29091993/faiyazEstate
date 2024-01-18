@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 PORT = 8000 || process.env.PORT;
 const db = require("./config/mongoose");
+const errorMiddleware = require("./config/errorHandlingMiddleware.js")
 
 // rest
 const app = express();
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use(bodyParse.json())
 app.use(bodyParse.urlencoded({extended : false}))
 app.use(morgan("dev"));
+
+app.use(errorMiddleware)
 
 
 
