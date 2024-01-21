@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { signInFailure, signInStart, signInSuccess, userSelector } from '../redux/user/userSlice';
+import OAuth from '../component/OAuth';
 
 export const SignIn = ()=>{
     const [formData, setFormData] = useState({});
@@ -66,6 +67,7 @@ export const SignIn = ()=>{
                     <button disabled={loading} type="submit" 
                         className='bg-slate-700 p-3 text-white rounded-lg uppercase hover:opacity-90 disabled:opacity-70'>
                             {loading ?"Logging" : "Sign-In"}</button>
+                    <OAuth/>
                 </form>
                 <div className='flex gap-1 mt-2'>
                     <p>New Here ?</p>
