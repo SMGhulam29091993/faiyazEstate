@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {useSelector} from 'react-redux';
 import { userSelector } from '../redux/user/userSlice';
 import  {useNavigate} from "react-router-dom"
 
 export const Profile = ()=>{
     const {currentUser} = useSelector(userSelector);
-    const navigate = useNavigate()
+    const navigate = useNavigate()   
 
     const handleClick = ()=>{
         navigate("/update-profile")
@@ -16,8 +16,8 @@ export const Profile = ()=>{
                 Profile
             </h1>
             <div className='flex flex-col gap-4'>
-                <img src={currentUser.user.avatar} alt="profile-img" 
-                    className='rounded-full h-24 w-24 object-cover self-center mt-2'/>
+                <img src={currentUser?.user.avatar} alt="profile-img" 
+                    className='rounded-full h-24 w-24 object-cover self-center mt-2 cursor-pointer'/>
                 <p className='font-bold uppercase text-center'>Name : 
                     <span className='text-cyan-950'>{currentUser.user.username}</span> </p>
                 <p className='font-bold uppercase text-center'>Email : 

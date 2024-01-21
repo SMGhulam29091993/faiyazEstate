@@ -7,13 +7,14 @@ export const SignUp = ()=>{
     const [formData, setFormData] = useState({});
     const [error,setError] = useState(null);
     const [loading,setLoading] = useState(false);
+    
 
     const navigate = useNavigate();
 
     const handleChange = (e)=>{
         setFormData({
             ...formData,
-            [e.target.id] : e.target.value
+            [e.target.id] : e.target.value,
         })
     }
     
@@ -48,6 +49,8 @@ export const SignUp = ()=>{
                     SignUp
                 </h1>
                 <form onSubmit={handleRegister} className='flex flex-col gap-4'>
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" 
+                     alt=" profile-img"className='rounded-full h-24 w-24 object-cover self-center mt-2 cursor-pointer'/>
                     <input type="text" placeholder='Username' className='border rounded-lg p-3' id='username' 
                         onChange={handleChange} />
                     <input type="email" placeholder='Email' className='border rounded-lg p-3' id='email' 

@@ -23,8 +23,9 @@ const OAuth = ()=>{
             }
             const res = await axios.post("http://localhost:8000/api/v1/user/googleAuth",googleData );
             const responseData = res.data;
+            
+            dispatch(signInSuccess(responseData));
             console.log(responseData)
-            dispatch(signInSuccess(responseData))
             navigate("/")
         } catch (error) {
             console.log(`Cannot sign-in with Google ${error}`);
