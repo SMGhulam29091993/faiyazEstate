@@ -7,6 +7,8 @@ import { Profile } from './pages/Profile';
 import { About } from './pages/About';
 import { HomePage } from './pages/Home';
 import Header from './component/Header';
+import PrivateRoute from './component/PrivateRoute';
+import PublicRoute from './component/PublicRoute';
 
 const App = ()=>{
   return (
@@ -14,9 +16,15 @@ const App = ()=>{
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
-        <Route path="/sign-in" element={<SignIn/>} />
-        <Route path="/sign-up" element={<SignUp/>} />
-        <Route path="/profile" element={<Profile/>} />
+        <Route element={<PublicRoute/>}>
+          <Route path="/sign-in" element={<SignIn/>} />
+          <Route path="/sign-up" element={<SignUp/>} />
+        </Route>
+        
+        <Route element={<PrivateRoute/>}>
+          <Route path="/profile" element={<Profile/>} />
+        </Route>
+        
         <Route path="/about" element={<About/>} />
       </Routes>
     </BrowserRouter>  
