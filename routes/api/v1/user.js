@@ -7,5 +7,6 @@ router.get("/test", (req,res)=>{
 })
 router.post("/sign-up", userController.register );
 router.post("/sign-in", userController.createSession);
+router.post("/googleAuth", userController.googleAuth);
 
 module.exports = router;
