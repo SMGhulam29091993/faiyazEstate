@@ -9,6 +9,7 @@ import { HomePage } from './pages/Home';
 import Header from './component/Header';
 import PrivateRoute from './component/PrivateRoute';
 import PublicRoute from './component/PublicRoute';
+import { UpdateProfile } from './pages/UpdateProfile';
 
 const App = ()=>{
   return (
@@ -23,6 +24,7 @@ const App = ()=>{
         
         <Route element={<PrivateRoute/>}>
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/update-profile" element={<UpdateProfile/>} />
         </Route>
         
         <Route path="/about" element={<About/>} />
