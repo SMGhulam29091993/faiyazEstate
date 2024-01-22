@@ -30,9 +30,9 @@ export const SignIn = ()=>{
                 dispatch(signInFailure(responseData.message))
                 return;
             }
-            
+     
             dispatch(signInSuccess(responseData.user));
-            navigate("/");
+            navigate("/profile");
             console.log("Current User : ", currentUser);
     
         } catch (error) {

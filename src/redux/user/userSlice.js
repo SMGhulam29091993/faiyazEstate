@@ -28,4 +28,4 @@ const userSlice = createSlice({
 
 export const {signInFailure,signInSuccess,signInStart} = userSlice.actions;
 export const userReducers = userSlice.reducer;
-export const userSelector = (state)=>state.user;
+export const userSelector = (state) => state.user ;

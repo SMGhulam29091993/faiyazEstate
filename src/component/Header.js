@@ -5,8 +5,10 @@ import {useSelector} from "react-redux";
 import { userSelector } from '../redux/user/userSlice';
 
 
+
 const Header = ()=>{
-    const {currentUser} = useSelector(userSelector)
+    const {currentUser} = useSelector(state=>state.user);
+    console.log(currentUser)
     return (
         <>
             <header className='bg-slate-700 shadow-md'>
@@ -31,13 +33,13 @@ const Header = ()=>{
                             <li className='hidden sm:inline font-semibold hover:underline cursor-pointer text-white'>About</li>
                         </Link>                        
                         <Link to="/profile">
-                            {currentUser? (
-                                <img src={currentUser.user.avatar} alt="profile"
-                                    className='rounded-full h-7 w-7 object-cover'/>
-                            ):(
-                                <li  className=' text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
+                            {currentUser ? (
+                                <li className='hidden sm:inline font-semibold hover:underline cursor-pointer text-white'>
+                                {currentUser.user?.username || currentUser.username || 'Profile'}
+                                </li>
+                            ) : (
+                                <li className='text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
                             )}
-                           
                         </Link>
                     </ul>                    
                 </div>
