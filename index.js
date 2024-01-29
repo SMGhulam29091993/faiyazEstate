@@ -1,22 +1,35 @@
 const express = require("express");
 require("dotenv").config()
-const bodyParse = require("body-parser");
+const bodyParser = require("body-parser");
 require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
 PORT = 8000 || process.env.PORT;
 const db = require("./config/mongoose");
 const errorMiddleware = require("./config/errorHandlingMiddleware.js")
+const cookieParser = require("cookie-parser");
+
 
 // rest
 const app = express();
 
 
 // middleware
-app.use(cors());
+const allowedOrigins = ["http://localhost:3000"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+
+
 app.use(express.json());
-app.use(bodyParse.json())
-app.use(bodyParse.urlencoded({extended : false}))
+app.use(cookieParser());
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended : false}))
 app.use(morgan("dev"));
 
 app.use(errorMiddleware)
@@ -24,7 +37,9 @@ app.use(errorMiddleware)
 
 
 
+
 app.use("/", require("./routes"));
+
 
 
 app.listen(PORT, (err)=>{
