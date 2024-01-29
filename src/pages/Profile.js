@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFailure, deleteStart, deleteSuccess, userSelector } from "../redux/user/userSlice";
+import { deleteFailure, deleteStart, deleteSuccess, signOutFailure, signOutStart, signOutSuccess, userSelector } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+
 export const Profile = ()=>{
-    const {currentUser, token} = useSelector(userSelector);
+    const {currentUser, token,loading} = useSelector(userSelector);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("Token :: ", token);
@@ -17,6 +18,7 @@ export const Profile = ()=>{
     const handleDeleteUser = async ()=>{
         try {
             dispatch(deleteStart());
+           
             const res = await axios.delete(`http://localhost:8000/api/v1/user/delete/${currentUser._id}`,{
                 headers : {
                     "Content-Type" : "application/json",
@@ -32,7 +34,6 @@ export const Profile = ()=>{
             dispatch(deleteSuccess());
             
         } catch (error) {
-            dispatch(deleteFailure(error));
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
@@ -48,6 +49,48 @@ export const Profile = ()=>{
                 // Something happened in setting up the request that triggered an Error
                 console.error("Request setup error:", error.message);
                 dispatch(deleteFailure(error.message))
+              }
+        }
+    };
+
+    const handleLogOut = async ()=>{
+        try {
+            dispatch(signOutStart());
+            console.log('LOADING : ', loading);
+            const res = await axios.get(`http://localhost:8000/api/v1/user/sign-out`,{
+                headers : {
+                    "Content-Type" : "application/json",
+                    Authorization : `Bearer ${token}`
+                }
+            });
+            const responseData = res.data;
+            if(responseData.success === false){
+                dispatch(signOutFailure(responseData.message));
+                return;
+            }
+            dispatch(signOutSuccess());
+            if(currentUser === null){
+                navigate("/sign-in")
+                console.log("User: ", currentUser);
+            }
+            
+            
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error("Response Data:", error.response.data);
+                dispatch(signOutFailure(error.response.data.message));
+                console.error("Response Status:", error.response.status);
+                console.error("Response Headers:", error.response.headers);
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.error("No response received from server:", error.request);
+                dispatch(signOutFailure(error.request))
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error("Request setup error:", error.message);
+                dispatch(signOutFailure(error.message))
               }
         }
     }
@@ -67,7 +110,7 @@ export const Profile = ()=>{
                         Update Profile</button>
                     <p className="text-red-600 flex justify-between font-semibold cursor-pointer">
                         <span onClick={handleDeleteUser}>Delete Account</span>
-                        <span>Sign Out</span></p>
+                        <span onClick={handleLogOut}>Sign Out</span></p>
                 </div>
 
             </div>
