@@ -12,5 +12,6 @@ router.post("/sign-in", userController.createSession);
 router.post("/googleAuth", userController.googleAuth);
 router.put("/update/:id",verifyUser, userController.updateUser);
 router.delete("/delete/:id", verifyUser, userController.destroyUser);
+router.get("/sign-out",verifyUser, userController.destroySession);
 
 module.exports = router;
