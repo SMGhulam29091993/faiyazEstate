@@ -3,7 +3,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import {auth}  from '../firbase-init';
 import axios from 'axios';
 import {useDispatch} from "react-redux";
-import {signInSuccess} from "../redux/user/userSlice";
+import {signInSuccess, token} from "../redux/user/userSlice";
 import {useNavigate} from 'react-router-dom';
 
 const OAuth = ()=>{
@@ -25,6 +25,7 @@ const OAuth = ()=>{
             const responseData = res.data;
             
             dispatch(signInSuccess(responseData));
+            dispatch(token(responseData.token))
             console.log(responseData)
             navigate("/")
         } catch (error) {

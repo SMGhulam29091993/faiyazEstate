@@ -34,7 +34,7 @@ const Header = ()=>{
                         </Link>                        
                         <Link to="/profile">
                             {currentUser ? (
-                                <li className='hidden sm:inline font-semibold hover:underline cursor-pointer text-white'>
+                                <li className=' sm:inline font-semibold hover:underline cursor-pointer text-white'>
                                 {currentUser.user?.username || currentUser.username || 'Profile'}
                                 </li>
                             ) : (

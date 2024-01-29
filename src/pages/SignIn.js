@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {Link, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { signInFailure, signInStart, signInSuccess, userSelector } from '../redux/user/userSlice';
+import { signInFailure, signInStart, signInSuccess, token, userSelector } from '../redux/user/userSlice';
 import OAuth from '../component/OAuth';
 
 export const SignIn = ()=>{
@@ -32,6 +32,8 @@ export const SignIn = ()=>{
             }
      
             dispatch(signInSuccess(responseData.user));
+            console.log("Token  :", responseData.token);
+            dispatch(token(responseData.token));
             navigate("/profile");
             console.log("Current User : ", currentUser);
     
