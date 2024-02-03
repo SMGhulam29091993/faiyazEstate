@@ -7,7 +7,7 @@ import { userSelector } from '../redux/user/userSlice';
 
 
 const Header = ()=>{
-    const {currentUser} = useSelector(state=>state.user);
+    const {currentUser} = useSelector(userSelector);
     console.log(currentUser)
     return (
         <>
@@ -22,7 +22,7 @@ const Header = ()=>{
                     
                     <form className='bg-slate-100 p-2 rounded-lg flex items-center'>
                         <input type="text" placeholder='Search...' 
-                            className='bg-transparent focus:outline-none w-24 sm:w-64'/>
+                            className='bg-transparent focus:outline-none w-24 sm:w-72'/>
                         <FaSearch className='text-slate-500 cursor-pointer'/>
                     </form>
                     <ul className='flex gap-4'>

@@ -10,10 +10,14 @@ export const Profile = ()=>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("Token :: ", token);
-    const handleNavigate = ()=>{
-        
+
+    const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
-    }
+    };
+
+    const handleCreateListNavigate = ()=>{
+        navigate("/create-listing")
+    };
 
     const handleDeleteUser = async ()=>{
         try {
@@ -73,8 +77,6 @@ export const Profile = ()=>{
                 navigate("/sign-in")
                 console.log("User: ", currentUser);
             }
-            
-            
         } catch (error) {
             if (error.response) {
                 // The request was made and the server responded with a status code
@@ -92,9 +94,12 @@ export const Profile = ()=>{
                 console.error("Request setup error:", error.message);
                 dispatch(signOutFailure(error.message))
               }
-        }
-    }
+        };
+    };
 
+    
+
+    
     return (
         <>
             <div className="p-3 max-w-lg mx-auto">
@@ -106,13 +111,15 @@ export const Profile = ()=>{
                         Name : <span>{currentUser.user?.username || currentUser.username}</span></p>
                      <p className="text-2xl text-center text-slate-200  font-semibold  bg-slate-700 p-2 rounded-lg">
                         Email : <span>{currentUser.user?.email || currentUser.email}</span></p>
-                    <button className='rounded-lg bg-blue-700 uppercase p-3 text-white hover:opacity-80 disabled:opacity:60' onClick={handleNavigate}>
+                    <button  className='rounded-lg bg-blue-700 uppercase p-3 text-white hover:opacity-80 disabled:opacity-60' onClick={handleUpdateNavigate}>
                         Update Profile</button>
+                        <button onClick={handleCreateListNavigate} className="rounded-lg bg-green-700 uppercase p-3 text-white hover:opacity-80 disabled:opacity-60">
+                            Create Listing
+                        </button>
                     <p className="text-red-600 flex justify-between font-semibold cursor-pointer">
                         <span onClick={handleDeleteUser}>Delete Account</span>
                         <span onClick={handleLogOut}>Sign Out</span></p>
                 </div>
-
             </div>
         </>
     )

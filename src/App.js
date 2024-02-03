@@ -10,6 +10,7 @@ import Header from './component/Header';
 import PrivateRoute from './component/PrivateRoute';
 import PublicRoute from './component/PublicRoute';
 import { UpdateProfile } from './pages/UpdateProfile';
+import { CreateList } from './pages/CreateListing';
 
 const App = ()=>{
   return (
@@ -19,12 +20,13 @@ const App = ()=>{
         <Route path="/" element={<HomePage/>}/>
         <Route element={<PublicRoute/>}>
           <Route path="/sign-in" element={<SignIn/>} />
-          <Route path="/sign-up" element={<SignUp/>} />
+          <Route path="/sign-up" element={<SignUp/>} /> 
         </Route>
         
         <Route element={<PrivateRoute/>}>
           <Route path="/profile" element={<Profile/>} />
           <Route path="/update-profile" element={<UpdateProfile/>} />
+          <Route path="/create-listing" element={<CreateList/>} />
         </Route>
         
         <Route path="/about" element={<About/>} />
