@@ -36,10 +36,10 @@ module.exports.createSession = async (req, res, next) => {
             return res.status(401).send({ message: "Invalid username/password", success: false });
         }
 
-        const token = jwt.sign({id : user._id}, process.env.JWT_SECRET, {expiresIn : 100000});
+        const token = jwt.sign({id : user._id}, process.env.JWT_SECRET);
         const { password: pass, ...rest } = user._doc;
 
-        res.cookie("jwtToken", token, { httpOnly: true, expiresIn:"1d", domain:"localhost:8000", path:"/" })
+        res.cookie("jwtToken", token, { httpOnly: true, domain:"localhost:8000", path:"/" })
             .status(200)
             .send({ message: "User Logged-In successfully", success: true, user: rest, token });
     } catch (error) {
@@ -53,10 +53,10 @@ module.exports.googleAuth = async (req,res,next)=>{
     try {
         const user = await Users.findOne({email});
         if(user){
-            const token = jwt.sign({id : user._id}, process.env.JWT_SECRET, {expiresIn : 100000});
+            const token = jwt.sign({id : user._id}, process.env.JWT_SECRET);
             const {password : pass, ...rest} = user._doc;
             res
-                .cookie("jwtToken", token, { httpOnly: true, expiresIn:"1d",domain:"localhost:8000", path:"/" })
+                .cookie("jwtToken", token, { httpOnly: true, domain:"localhost:8000", path:"/" })
                 .status(200)
                 .send({message : "User Logged-In Successfully", success : true, user : rest, token})
         }else{
@@ -66,10 +66,10 @@ module.exports.googleAuth = async (req,res,next)=>{
                                 username : username.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-4),
                                                  password : hashedPassword, 
                                                  avatar : photo, });
-            const token = jwt.sign({id : newUser._id}, process.env.JWT_SECRET, {expiresIn : 100000});
+            const token = jwt.sign({id : newUser._id}, process.env.JWT_SECRET);
             const {password : pass, ...rest} = newUser._doc;
             res
-                .cookie("jwtToken", token, { httpOnly: true, expiresIn:"1d",domain:"localhost:8000", path:"/" })
+                .cookie("jwtToken", token, { httpOnly: true, domain:"localhost:8000", path:"/" })
                 .status(200)
                 .send({message : "User Logged-In Successfully", success : true, user : rest, token})
         }
@@ -123,7 +123,7 @@ module.exports.destroyUser = async (req,res,next)=>{
 module.exports.destroySession = (req, res, next) => {
     try {
         // Set the "jwtToken" cookie with an expiration in the past
-        res.cookie("jwtToken", "", { expires: new Date(0), httpOnly: true });
+        res.cookie("jwtToken", "", { httpOnly: true });
         res.status(200).send({ message: "User Log-out successfully", success: true, user: null });
     } catch (error) {
         next(error);
