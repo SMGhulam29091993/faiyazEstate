@@ -2,6 +2,7 @@ const Users = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const  errorHandler  = require("../utils/error")
 const jwt  = require("jsonwebtoken");
+const Listing = require("../models/listingModel");
 require("dotenv").config();
 
 module.exports.register = async (req,res,next)=>{
@@ -129,3 +130,22 @@ module.exports.destroySession = (req, res, next) => {
         next(error);
     }
 };
+
+
+module.exports.getUserListings = async (req,res,next)=>{
+    if(req.user.id === req.params.id){
+        try {
+            const listings = await Listing.find({userRef : req.params.id});
+            if(!listings){
+                res.status(403).send({message : "No Listing Created Yet !!", success : false});
+                return;
+            }
+            res.status(200).send({message:"Here is Your Listings", success : true, listings});
+        } catch (error) {
+            next(error);
+        }
+    }else{
+        res.status(401).send({message: "You are not authorized to view this !!", success : false})
+        return;
+    }
+}
