@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFailure, deleteStart, deleteSuccess, signOutFailure, signOutStart, signOutSuccess, userSelector } from "../redux/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -10,6 +10,8 @@ export const Profile = ()=>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log("Token :: ", token);
+    const [errorShowListing, setErrorshowListing] = useState(null)
+    const [userListing,setUserListing] = useState([]);
 
     const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
@@ -97,7 +99,40 @@ export const Profile = ()=>{
         };
     };
 
-    
+    const showListing = async ()=>{
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/user/get-listing/${currentUser._id}`,{
+                headers:{
+                    "Content-Type" : "application/json",
+                    Authorization : `Bearer ${token}`
+                }
+            })
+            const listingResponse = res.data;
+            console.log(listingResponse.listings);
+            if(!listingResponse.success){
+                setErrorshowListing(listingResponse.message);
+            }
+            // if (Array.isArray(listingResponse.listings)) {
+            //     setUserListing((prevUserListing) => [...prevUserListing, ...listingResponse.listings]);
+            //     console.log(userListing);
+            // } else {
+            //     console.error("Invalid response format for listings:", listingResponse.listings);
+            //     setErrorshowListing("Invalid response format for listings");
+            // }
+            setUserListing(prevState=>[...prevState, ...listingResponse.listings])
+        } catch (error) {
+            if(error.response){
+                setErrorshowListing(error.response.data.message);
+            }else if(error.request){
+                setErrorshowListing(error.request);
+            }else{
+                setErrorshowListing(error.message);
+            }
+        }
+    }
+    useEffect(() => {
+        console.log("Component re-rendered. Updated userListing:", userListing);
+    }, [userListing]);
 
     
     return (
@@ -116,9 +151,30 @@ export const Profile = ()=>{
                         <button onClick={handleCreateListNavigate} className="rounded-lg bg-green-700 uppercase p-3 text-white hover:opacity-80 disabled:opacity-60">
                             Create Listing
                         </button>
-                    <p className="text-red-600 flex justify-between font-semibold cursor-pointer">
+                    <p className="text-red-600 flex justify-between items-center font-semibold cursor-pointer">
                         <span onClick={handleDeleteUser}>Delete Account</span>
-                        <span onClick={handleLogOut}>Sign Out</span></p>
+                        <span onClick={showListing} className="text-green-700 font-semibold hover:shadow-md">Show Listing</span>
+                        <span onClick={handleLogOut}>Sign Out</span>
+                    </p>
+                    <p className="text-red-700 text-center">{errorShowListing && errorShowListing}</p>
+                    {userListing && userListing.length > 0 &&
+                        <div className="flex flex-col gap-4">
+                            <h1 className="text-center mt-7 font-semibold text-2xl">Your Listings</h1>
+                            {userListing.map((listing)=>
+                                <div key={listing._id} className="flex justify-between items-center border rounded-lg p-3">
+                                    <Link to={`/listing/${listing._id}`}>
+                                        <img src={listing.imageUrl[0]} alt="Listing Cover" className="h-16 w-16 object-contain"/>
+                                    </Link>
+                                    <Link to={`/listing/${listing._id}`}  className="text-slate-700 font-semibold flex-1 hover:underline truncate">
+                                        <p >{listing.name}</p>
+                                    </Link>
+                                    <div className="flex flex-col ">  
+                                        <button className="text-red-700 uppercase">Delete</button>
+                                        <button className="text-green-700 uppercase">Edit</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>}
                 </div>
             </div>
         </>
