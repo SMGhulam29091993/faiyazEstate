@@ -32,7 +32,8 @@ app.use(cookieParser());
 // app.use(bodyParser.urlencoded({extended : false}))
 app.use(morgan("dev"));
 
-app.use(errorMiddleware)
+app.use(errorMiddleware);
+
 
 
 
