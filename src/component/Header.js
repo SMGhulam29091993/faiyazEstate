@@ -34,8 +34,15 @@ const Header = ()=>{
                         </Link>                        
                         <Link to="/profile">
                             {currentUser ? (
-                                <li className=' sm:inline font-semibold hover:underline cursor-pointer text-white'>
-                                {currentUser.user?.username || currentUser.username || 'Profile'}
+                                <li className=' sm:inline font-semibold hover:underline cursor-pointer text-white flex justify-between'>
+                                    {currentUser.user?.avatar || currentUser.avatar?(
+                                        <img src={currentUser.user?.avatar || currentUser.avatar || 'Profile'} 
+                                        alt="Profile" className='w-7 h-7 rounded-full'/>
+                                    ):(
+                                        <span>{currentUser.user?.username || currentUser.username || 'Profile'}</span>
+                                    )}
+                                
+                                
                                 </li>
                             ) : (
                                 <li className='text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>

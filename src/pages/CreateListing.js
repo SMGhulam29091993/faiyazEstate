@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../redux/user/userSlice";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firbase-init";
+import {useNavigate} from "react-router-dom"
 
 export const CreateList = ()=>{
     const [file,setFile] = useState([])
@@ -12,7 +13,7 @@ export const CreateList = ()=>{
     const {token,currentUser} = useSelector(userSelector);
     const [imageUploadError, setImageUploadError] = useState(null);
     const [uploading, setUploading] = useState(false);
- 
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         imageUrl : [],
@@ -23,7 +24,7 @@ export const CreateList = ()=>{
         bedrooms : 1,
         bathrooms : 1,
         regularPrice :100,
-        discountedPrice : 100,
+        discountedPrice : 0,
         offer : false,
         parking : false,
         furnished : false,
@@ -103,6 +104,15 @@ export const CreateList = ()=>{
     const handleFormSubmit = async (e)=>{
         e.preventDefault();      
         try {
+            if(formData.imageUrl.length < 1) {
+                setError("You must Upload atleast one image!!");
+                return;
+            }
+            if (+formData.regularPrice < +formData.discountedPrice){
+                setError("Discount price must be lesser than the regular price !!");
+                return;
+            }
+
             setLoading(true);
             setError(null);
             const res = await axios.post("http://localhost:8000/api/v1/listings/create-list", formData, {
@@ -112,11 +122,13 @@ export const CreateList = ()=>{
                 }
             });
             const responseData = res.data;
+            console.log(responseData);
             if (!responseData.success) {
                 throw new Error(responseData.message);
             }
             setLoading(false);
             setError(null);
+            navigate(`/listing/${responseData.listing._id}`)
             
         } catch (error) {
             if(error.response){
@@ -145,10 +157,9 @@ export const CreateList = ()=>{
             <main className="p-3 max-w-4xl mx-auto">
                 <h1 className="text-3xl text-orange-700 text-center my-2">Create Listing</h1>
                 <form className="flex flex-col sm:flex-row my-7 gap-6 " encType="multipart/form-data" onSubmit={handleFormSubmit}>
-                    {loading?(<p className="text-green-600">Creating</p>):""}
-                    {error?<p className="text-red-800">error</p>:""}
+                    
                     <div className="flex flex-col gap-4 flex-1">
-                        
+                    {error?(<p className="text-red-800 text-center">{error}</p>):""}
                         <input type="text" placeholder="Name" id="name" maxLength="62" minLength="10" className="p-3 rounded-lg border" value={formData.name} onChange={handleChange} required/>
                         <textarea placeholder="Description" id="description" className="p-3 rounded-lg border"  value={formData.description} onChange={handleChange} required/>
                         <input type="text" placeholder="Address" id="address"  className="p-3 rounded-lg border" value={formData.address} onChange={handleChange} required/>
@@ -186,17 +197,25 @@ export const CreateList = ()=>{
                             <div className="flex items-center gap-4">
                                 <input type="number" id="regularPrice" min="100" max="100000000"  required className="p-2 border border-gray-300 rounded-lg " value={formData.regularPrice} onChange={handleChange} />
                                 <div  className="flex flex-col items-center">
-                                    <p>Regular Price</p> 
-                                    <span className="text-xs">(Rs per month)</span>
+                                    <p>Regular Price</p>
+                                    {formData.type==="sale"?"":(
+                                        <span className="text-xs">(Rs per month)</span>
+                                    )} 
+                                    
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <input type="number" id="discountedPrice" min="100" max="100000000" required className="p-2 border border-gray-300 rounded-lg " value={formData.discountedPrice} onChange={handleChange} />
-                                <div className="flex flex-col items-center">
-                                    <p>Discounted Price</p> 
-                                    <span className="text-xs">(Rs per month)</span>
+                            {formData.offer?(
+                                <div className="flex items-center gap-4">
+                                    <input type="number" id="discountedPrice" min="0" max="100000000" required className="p-2 border border-gray-300 rounded-lg " value={formData.discountedPrice} onChange={handleChange} />
+                                    <div className="flex flex-col items-center">
+                                        <p>Discounted Price</p> 
+                                        {formData.type==="sale"?"":(
+                                            <span className="text-xs">(Rs per month)</span>
+                                        )} 
+                                    </div>
                                 </div>
-                            </div>
+                            ):""}
+                            
                         </div>
                     </div>
                     <div className="flex flex-col flex-1 gap-4">
@@ -222,7 +241,9 @@ export const CreateList = ()=>{
                             </div>
                             )
                         ))}
-                        <button className="p-3 bg-green-700 uppercase text-white rounded-lg hover:opacity-90 disabled:opacity-60">Create Listing</button>
+                        <button className="p-3 bg-green-700 uppercase text-white rounded-lg hover:opacity-90 disabled:opacity-60" disabled={loading || uploading} >
+                            {loading?"Creating":"Create Listing"}
+                        </button>
                     </div>
                 </form>
             </main>

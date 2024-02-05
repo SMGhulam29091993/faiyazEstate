@@ -65,12 +65,24 @@ const userSlice = createSlice({
             state.error = action.payload;
             state.loading = false;
         },
+        deleteAvatarStart : (state)=>{
+        state.loading = true;
+        },
+        deleteAvatarSuccess : (state,action)=>{
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        deleteAvatarError : (state,action)=>{
+            state.error = action.payload;
+            state.loading = false;
+        }
 
     }
 })
 
 export const {signInFailure,signInSuccess,signInStart, token, showSuccess,deleteFailure,deleteStart,
-    deleteSuccess,signOutFailure,signOutStart,signOutSuccess,
+    deleteSuccess,signOutFailure,signOutStart,signOutSuccess,deleteAvatarError,deleteAvatarStart,deleteAvatarSuccess,
                 updateUserError,updateUserSuccess,updateUserStart} = userSlice.actions;
 export const userReducers = userSlice.reducer;
 export const userSelector = (state) => state.user ;
