@@ -4,6 +4,8 @@ const listingController = require("../../../controllers/listingController.js");
 const {verifyUser} = require("../../../utils/verifyUser.js")
 
 router.post("/create-list", verifyUser, listingController.createList)
-router.post("/delete-listing/:id", verifyUser, listingController.deleteList)
+router.delete("/delete-listing/:id", verifyUser, listingController.deleteList)
+router.post("/update-listing/:id", verifyUser, listingController.updateListing)
+router.get("/get-listing-detail/:id", listingController.getListingDetails)
 
 module.exports= router;

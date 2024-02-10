@@ -25,5 +25,35 @@ module.exports.deleteList = async (req,res,next)=>{
     } catch (error) {
         next(error);
     }
-    
+};
+
+module.exports.updateListing = async (req,res, next)=>{
+    const listing = await Listing.findById(req.params.id);
+    if(!listing){
+        res.status(404).send({message : "Listing you are try ing to update not found!!", success : false})
+        return;
+    }
+    if(req.user.id !== listing.userRef){
+        res.status(401).send({message : "Not Authorized to update the listing!!", success : false});
+        return;
+    }
+    try {
+        const updateListng = await Listing.findByIdAndUpdate(req.params.id, req.body, {new:true});
+        res.status(200).send({message : "Listing updated successfully", success : true, listings : updateListng})
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports.getListingDetails = async (req,res,next)=>{
+    try {
+        const listing = await Listing.findById(req.params.id);
+        if(!listing){
+            res.status(404).send({message : "Could not find the listing", success : false});
+            return;
+        }
+        res.status(200).send({message : "Here is your listings", success : true, listing});
+    } catch (error) {
+        next(error)
+    }
 }
