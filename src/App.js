@@ -11,6 +11,7 @@ import PrivateRoute from './component/PrivateRoute';
 import PublicRoute from './component/PublicRoute';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { CreateList } from './pages/CreateListing';
+import { UpdateListing } from './pages/UpdateListings';
 
 const App = ()=>{
   return (
@@ -27,9 +28,10 @@ const App = ()=>{
           <Route path="/profile" element={<Profile/>} />
           <Route path="/update-profile" element={<UpdateProfile/>} />
           <Route path="/create-listing" element={<CreateList/>} />
+          <Route path="/update-listing/:listingID" element={<UpdateListing/>} />
         </Route>
         
-        <Route path="/about" element={<About/>} />
+        <Route path="/about" element={<About/>} />s
       </Routes>
     </BrowserRouter>  
   );

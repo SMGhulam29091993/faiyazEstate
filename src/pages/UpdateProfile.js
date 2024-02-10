@@ -22,7 +22,7 @@ export const UpdateProfile = ()=>{
     // console.log(currentUser._id)
     useEffect(()=>{
         if(file){
-          handleFileUpload(file);
+          handleFileUpload(file);         
         };
     },[file]);
 

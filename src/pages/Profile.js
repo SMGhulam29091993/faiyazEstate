@@ -112,13 +112,6 @@ export const Profile = ()=>{
             if(!listingResponse.success){
                 setErrorshowListing(listingResponse.message);
             }
-            // if (Array.isArray(listingResponse.listings)) {
-            //     setUserListing((prevUserListing) => [...prevUserListing, ...listingResponse.listings]);
-            //     console.log(userListing);
-            // } else {
-            //     console.error("Invalid response format for listings:", listingResponse.listings);
-            //     setErrorshowListing("Invalid response format for listings");
-            // }
             setUserListing(prevState=>[...prevState, ...listingResponse.listings])
         } catch (error) {
             if(error.response){
@@ -129,12 +122,43 @@ export const Profile = ()=>{
                 setErrorshowListing(error.message);
             }
         }
-    }
+    };
+   
+    
     useEffect(() => {
         console.log("Component re-rendered. Updated userListing:", userListing);
     }, [userListing]);
 
-    
+    const deleteListing = async (id)=>{
+        try {
+            const res = await axios.delete(`http://localhost:8000/api/v1/listings/delete-listing/${id}`,{
+                headers:{
+                    "Content-Type" : "application/json",
+                    Authorization : `Bearer ${token}`
+                }
+            })
+            const listingResponse = res.data;
+            console.log(listingResponse.listings);
+            if(!listingResponse.success){
+                setErrorshowListing(listingResponse.message);
+            }
+            setUserListing(prevState=>prevState.filter((listing)=>listing._id !== id))
+        } catch (error) {
+            if(error.response){
+                setErrorshowListing(error.response.data.message);
+            }else if(error.request){
+                setErrorshowListing(error.request);
+            }else{
+                setErrorshowListing(error.message);
+            }
+        }
+    };
+
+    useEffect(() => {
+        console.log("Component re-rendered. Updated userListing:", userListing);
+    }, [userListing]);
+
+
     return (
         <>
             <div className="p-3 max-w-lg mx-auto">
@@ -169,8 +193,12 @@ export const Profile = ()=>{
                                         <p >{listing.name}</p>
                                     </Link>
                                     <div className="flex flex-col ">  
-                                        <button className="text-red-700 uppercase">Delete</button>
-                                        <button className="text-green-700 uppercase">Edit</button>
+                                        <button className="text-red-700 uppercase" 
+                                            onClick={()=>deleteListing(listing._id)}>Delete</button>
+                                        <Link to={`/update-listing/${listing._id}`}>
+                                            <button className="text-green-700 uppercase">Edit</button>
+                                        </Link>
+                                        
                                     </div>
                                 </div>
                             )}
