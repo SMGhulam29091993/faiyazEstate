@@ -12,6 +12,7 @@ import PublicRoute from './component/PublicRoute';
 import { UpdateProfile } from './pages/UpdateProfile';
 import { CreateList } from './pages/CreateListing';
 import { UpdateListing } from './pages/UpdateListings';
+import { ListingPage } from './pages/ListingPage';
 
 const App = ()=>{
   return (
@@ -19,6 +20,7 @@ const App = ()=>{
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
+        <Route path="/listing/:listingID" element={<ListingPage/>} />
         <Route element={<PublicRoute/>}>
           <Route path="/sign-in" element={<SignIn/>} />
           <Route path="/sign-up" element={<SignUp/>} /> 
@@ -31,7 +33,7 @@ const App = ()=>{
           <Route path="/update-listing/:listingID" element={<UpdateListing/>} />
         </Route>
         
-        <Route path="/about" element={<About/>} />s
+        <Route path="/about" element={<About/>} />
       </Routes>
     </BrowserRouter>  
   );

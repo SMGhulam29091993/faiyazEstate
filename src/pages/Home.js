@@ -18,7 +18,7 @@ export const HomePage = ()=>{
   }, []);
     return (
         <>
-            <h1 className='text-3xl text-center  text-orange-700'>
+            <h1 className='text-center text-3xl text-orange-700 my-2'>
                 HomePage
             </h1>
             <p>{responseData && responseData.message ? JSON.stringify(responseData.message) : ""}</p>

@@ -17,6 +17,7 @@ export const UpdateProfile = ()=>{
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [updateDone, setUpdateDone] = useState(false);
+    const [avatarDeleted, setAvatarDeleted] = useState(false)
     console.log("Access Token: " , token);
     // console.log(token);
     // console.log(currentUser._id)
@@ -131,11 +132,7 @@ export const UpdateProfile = ()=>{
                   withCredentials: true,
               }
           );
-          console.log("Request Headers:", res.config.headers);
           
-          console.log("Axios Config: ", res.config);
-      
-          console.log("Axios Response:", res);
           const responseData = res.data;
           if(responseData.success === false){
             dispatch(deleteAvatarError(responseData.message));
@@ -143,8 +140,8 @@ export const UpdateProfile = ()=>{
           }
 
           dispatch(deleteAvatarSuccess(responseData.user));   
-          
-          setTimeout(()=>setUpdateDone(true), 5000)
+          setFilePerc(0);          
+          setTimeout(()=>setAvatarDeleted(true), 5000)
           
         } catch (error) {
           if (error.response) {
@@ -178,6 +175,7 @@ export const UpdateProfile = ()=>{
             </h1>
             {error && (<p className='text-red-500 text-center m-5'>{error}</p>)}
             {updateDone && !loading?(<p className='text-green-500 text-center m-5'>User Updated</p>):""}
+            
             <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
                 <input onChange={(e)=>setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/.*" onClick={(e)=>{e.stopPropagation()}} />
                 <img src={formData.avatar || currentUser.user?.avatar || currentUser.avatar || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} alt="profile-img" onClick={()=>fileRef.current.click()}
@@ -190,10 +188,11 @@ export const UpdateProfile = ()=>{
                         <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
                     ) : filePerc === 100 && updateDone? (
                         <span className='text-green-700'>Image uploaded successfully</span>
-                    ):(!currentUser.user?.avatar && updateDone && !loading) || (!currentUser.avatar && updateDone && !loading)?(
-                    <span className='text-red-700'>Image Dleted</span>
-                    ): ""}
+                    ):(!currentUser.user?.avatar && filePerc===0 && avatarDeleted && !loading) || (!currentUser.avatar && filePerc===0 && avatarDeleted && !loading)?(
+                      <span className='text-red-700'>Image Deleted</span>
+                      ):""}
                 </p>
+                
                 
 
                 <input type="text" placeholder='Username' className='rounded-lg border p-3' 

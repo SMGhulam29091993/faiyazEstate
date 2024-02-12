@@ -123,11 +123,6 @@ export const Profile = ()=>{
             }
         }
     };
-   
-    
-    useEffect(() => {
-        console.log("Component re-rendered. Updated userListing:", userListing);
-    }, [userListing]);
 
     const deleteListing = async (id)=>{
         try {
@@ -187,7 +182,7 @@ export const Profile = ()=>{
                             {userListing.map((listing)=>
                                 <div key={listing._id} className="flex justify-between items-center border rounded-lg p-3">
                                     <Link to={`/listing/${listing._id}`}>
-                                        <img src={listing.imageUrl[0]} alt="Listing Cover" className="h-16 w-16 object-contain"/>
+                                        <img src={listing.imageUrl[0]} alt="Listing Cover" className="h-16 w-16 object-contain mr-1"/>
                                     </Link>
                                     <Link to={`/listing/${listing._id}`}  className="text-slate-700 font-semibold flex-1 hover:underline truncate">
                                         <p >{listing.name}</p>
