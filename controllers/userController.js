@@ -148,4 +148,19 @@ module.exports.getUserListings = async (req,res,next)=>{
         res.status(401).send({message: "You are not authorized to view this !!", success : false})
         return;
     }
+};
+
+module.exports.getUser = async (req,res,next)=>{
+    try {
+        const userDetails = await Users.findById(req.params.id);
+        if(!userDetails){
+            res.status(401).send({message : "User Details not Found!!", success : false});
+            return;
+        } 
+        const {password : pass, ...rest} = userDetails._doc;
+        res.status(200).send({message : "The Details are received", success : true, user : rest})
+
+    } catch (error) {
+        next(error);
+    }
 }
