@@ -8,6 +8,7 @@ import "swiper/css/bundle";
 import {FaBath, FaBed, FaChair, FaMapMarkedAlt, FaParking, FaShare} from "react-icons/fa"
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/user/userSlice';
+import Contact from '../component/Contact';
 
 /**
 * @author
@@ -119,10 +120,11 @@ export const ListingPage = () => {
               </li>
             </ul>
             {currentUser && details.userRef !== currentUser._id && !contact &&(
-              <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
+              <button onClick={()=>setContact(true)} className='bg-blue-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
                 Contact Landlord
               </button>
             )}
+            {contact && <Contact listing={details}/>}
           </div>
         </>
       )}
