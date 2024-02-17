@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
-import {Link} from "react-router-dom";
 import emailjs from 'emailjs-com';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/user/userSlice';
@@ -31,18 +30,12 @@ const Contact = ({listing}) => {
         fetchLandLord();
     },[listing.userRef]);
 
-    // const sendEmail = (e) => {
-    //     e.preventDefault()
-    //     const subject = `Regarding ${encodeURIComponent(listing.name)}`;
-    //     const body = encodeURIComponent(message);
-    //     const mailtoLink = `mailto:raj9007045010@gmail.com?subject=${subject}&body=${body}`;
-    //     window.location.href = mailtoLink;
-    // };
+    
     const sendEmail = (e) => {
         e.preventDefault();
-        const Service_ID = 'service_16zv904';
-        const Template_ID = 'template_ugj0i79';
-        const User_ID = "pwc3wrM0Bint9Tr2G";
+        const Service_ID = 'service_v6zetpw';
+        const Template_ID = 'template_7xnpkif';
+        const User_ID = "kwc280HMCMCH8Nu23";
         const templateParams = {
             subject : `Regarding ${listing.name}`,
             from_name: currentUser.username || currentUser.user?.username, // Change to the name of the sender
@@ -54,6 +47,7 @@ const Contact = ({listing}) => {
         emailjs.send(Service_ID, Template_ID, templateParams, User_ID)
             .then((response) => {
                 console.log('Email sent:', response);
+                setMessage("")
             })
             .catch((error) => {
                 console.error('Email failed to send:', error);
@@ -73,10 +67,6 @@ const Contact = ({listing}) => {
                             placeholder='Enter Your Message Here!!'
                             className='w-full border border-solid border-black p-3 rounded-lg placeholder:text-black mt-1'
                         />
-                {/* <Link to={`mailto:${landLord.email}?subject=Regarding Regarding ${encodeURIComponent(listing.name)}&body=${message}`}
-                    className='bg-blue-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'>
-                    Send Message          
-                </Link> */}
                 <button onClick={sendEmail} className='bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 '>Send Message</button>
             </div>
         )}
