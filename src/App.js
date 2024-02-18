@@ -13,6 +13,7 @@ import { UpdateProfile } from './pages/UpdateProfile';
 import { CreateList } from './pages/CreateListing';
 import { UpdateListing } from './pages/UpdateListings';
 import { ListingPage } from './pages/ListingPage';
+import { SearchPage } from './pages/SearchPage';
 
 const App = ()=>{
   return (
@@ -21,6 +22,7 @@ const App = ()=>{
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/listing/:listingID" element={<ListingPage/>} />
+        <Route path="/search" element={<SearchPage/>} />
         <Route element={<PublicRoute/>}>
           <Route path="/sign-in" element={<SignIn/>} />
           <Route path="/sign-up" element={<SignUp/>} /> 
