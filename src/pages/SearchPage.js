@@ -16,6 +16,7 @@ export const SearchPage = (props) => {
     });
     const [loading,setLoading] = useState(false);
     const [listing,setListing] = useState();
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(()=>{
         const urlParams = new URLSearchParams(location.search);
@@ -43,9 +44,11 @@ export const SearchPage = (props) => {
                 const searchQuery = urlParams.toString();
                 const res = await axios.get(`http://localhost:8000/api/v1/listings/get?${searchQuery}`);
                 const responseData = res.data;
-                // if(responseData.listings.length === 0){
-                //     console.log("No Listing Found");
-                // }
+                if(responseData.listings.length > 8){
+                    setShowMore(true);
+                }else{
+                    setShowMore(false)
+                }
                 
                 await setListing(responseData.listings);
                 setLoading(false);
@@ -99,6 +102,23 @@ export const SearchPage = (props) => {
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
 
+    }
+    const onShowMoreClick = async ()=>{
+        try {
+            const numberOfListing = listing.length;
+            const startingIndex = numberOfListing;
+            const urlParams = new URLSearchParams(location.search);
+            urlParams.set('startIndex', startingIndex);
+            const searchQuery = urlParams.toString();
+            const res = await axios.get(`http://localhost:8000/api/v1/listings/get?${searchQuery}`);
+            const responseData = res.data;
+            if(responseData.listings.length < 9){
+                setShowMore(false)
+            }
+            setListing([...listing, ...responseData.listings])
+        } catch (error) {
+            console.log(error);
+        }
     }
   return(
     <div className='flex flex-col md:flex-row'>
@@ -158,6 +178,10 @@ export const SearchPage = (props) => {
                 {!loading && listing?.length === 0 && (<p className=' w-full text-center text-2xl text-red-800'>No Listing Found!!</p>)}
                 {!loading && listing && listing.map(detail=><ListingCard key={detail._id} listingDetail={detail}/>)}
             </div>
+            {showMore && <button onClick={onShowMoreClick} 
+                            className='text-green-600 text-center w-full hover:underline my-2'>
+                Show More...
+            </button>}
         </div>
     </div>
    )
