@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ListingCard from '../component/ListingCard';
 
 /**
 * @author
@@ -150,8 +151,13 @@ export const SearchPage = (props) => {
                 <button className='bg-blue-600 p-3 text-white rounded-lg uppercase hover:opacity-90'>Search</button>
             </form>
         </div>
-        <div className=''>
+        <div className='flex-1'>
             <h1 className='text-3xl font-semibold border-b-2 p-3 text-slate-700'>Listing Result : </h1>
+            <div className='p-7 flex flex-wrap gap-4'>
+                {loading && <p className='text-center text-3xl text-slate-800 w-full'>Loading...</p>}
+                {!loading && listing?.length === 0 && (<p className=' w-full text-center text-2xl text-red-800'>No Listing Found!!</p>)}
+                {!loading && listing && listing.map(detail=><ListingCard key={detail._id} listingDetail={detail}/>)}
+            </div>
         </div>
     </div>
    )
