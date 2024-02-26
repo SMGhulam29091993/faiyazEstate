@@ -18,7 +18,7 @@ const Contact = ({listing}) => {
     useEffect(()=>{
         const fetchLandLord = async ()=>{      
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/user/${listing.userRef}`);
+                const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/user/${listing.userRef}`);
                 const responseData = res.data;
                 console.log(responseData)
                 setLandLord(responseData.user)

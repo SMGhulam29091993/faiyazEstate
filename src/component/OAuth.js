@@ -21,7 +21,7 @@ const OAuth = ()=>{
                 email : result.user.email,
                 photo : result.user.photoURL
             }
-            const res = await axios.post("http://localhost:8000/api/v1/user/googleAuth",googleData );
+            const res = await axios.post("https://faiyazestate.onrender.com/api/v1/user/googleAuth",googleData );
             const responseData = res.data;
             
             dispatch(signInSuccess(responseData));

@@ -30,7 +30,7 @@ export const ListingPage = () => {
     const fetchListing = async ()=>{
       try {
         setLoading(true);
-        const fetchResponse = await axios.get(`http://localhost:8000/api/v1/listings/get-listing-detail/${listingID}`);
+        const fetchResponse = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get-listing-detail/${listingID}`);
         const fetchData = fetchResponse.data;
         if(!fetchData.success){
           setError(true);

@@ -23,7 +23,7 @@ export const SignUp = ()=>{
        e.preventDefault();
        try {
         setLoading(true);
-        const res = await axios.post("http://localhost:8000/api/v1/user/sign-up", formData);
+        const res = await axios.post("https://faiyazestate.onrender.com/api/v1/user/sign-up", formData);
         const responseData = res.data;
         if(responseData.success === false){
             setError(responseData.message);

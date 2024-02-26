@@ -25,7 +25,7 @@ export const Profile = ()=>{
         try {
             dispatch(deleteStart());
            
-            const res = await axios.delete(`http://localhost:8000/api/v1/user/delete/${currentUser._id}`,{
+            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/user/delete/${currentUser._id}`,{
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`
@@ -63,7 +63,7 @@ export const Profile = ()=>{
         try {
             dispatch(signOutStart());
             console.log('LOADING : ', loading);
-            const res = await axios.get(`http://localhost:8000/api/v1/user/sign-out`,{
+            const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/user/sign-out`,{
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`
@@ -101,7 +101,7 @@ export const Profile = ()=>{
 
     const showListing = async ()=>{
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/user/get-listing/${currentUser._id}`,{
+            const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/user/get-listing/${currentUser._id}`,{
                 headers:{
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`
@@ -126,7 +126,7 @@ export const Profile = ()=>{
 
     const deleteListing = async (id)=>{
         try {
-            const res = await axios.delete(`http://localhost:8000/api/v1/listings/delete-listing/${id}`,{
+            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/listings/delete-listing/${id}`,{
                 headers:{
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`

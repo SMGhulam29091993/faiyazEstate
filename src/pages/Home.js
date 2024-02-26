@@ -16,7 +16,7 @@ export const HomePage = ()=>{
   useEffect(()=>{
     const fetchOfferListing = async ()=>{
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/listings/get?offer=true&limit=4`);
+        const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get?offer=true&limit=4`);
         const responseData = res.data;
         console.log("offer",responseData);
         setOfferListing(responseData.listings);
@@ -28,7 +28,7 @@ export const HomePage = ()=>{
 
     const fetchRentListing = async ()=>{
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/listings/get?type=rent&limit=4`);
+        const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get?type=rent&limit=4`);
         const responseData = res.data;
         console.log("rent",responseData);
         setRentListing(responseData.listings);
@@ -40,7 +40,7 @@ export const HomePage = ()=>{
 
     const fetchSaleListing = async ()=>{
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/listings/get?type=sale&limit=4`);
+        const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get?type=sale&limit=4`);
         const responseData = res.data;
         console.log("Sale",responseData);
         setSaleListing(responseData.listings)

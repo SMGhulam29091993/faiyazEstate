@@ -42,7 +42,7 @@ export const SearchPage = (props) => {
             setLoading(true);
             try {
                 const searchQuery = urlParams.toString();
-                const res = await axios.get(`http://localhost:8000/api/v1/listings/get?${searchQuery}`);
+                const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get?${searchQuery}`);
                 const responseData = res.data;
                 if(responseData.listings.length > 8){
                     setShowMore(true);
@@ -110,7 +110,7 @@ export const SearchPage = (props) => {
             const urlParams = new URLSearchParams(location.search);
             urlParams.set('startIndex', startingIndex);
             const searchQuery = urlParams.toString();
-            const res = await axios.get(`http://localhost:8000/api/v1/listings/get?${searchQuery}`);
+            const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get?${searchQuery}`);
             const responseData = res.data;
             if(responseData.listings.length < 9){
                 setShowMore(false)

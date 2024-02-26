@@ -115,7 +115,7 @@ export const CreateList = ()=>{
 
             setLoading(true);
             setError(null);
-            const res = await axios.post("http://localhost:8000/api/v1/listings/create-list", formData, {
+            const res = await axios.post("https://faiyazestate.onrender.com/api/v1/listings/create-list", formData, {
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`

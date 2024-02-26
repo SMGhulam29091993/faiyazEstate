@@ -21,7 +21,7 @@ export const UpdateListing = ()=>{
         const fetchListing = async ()=>{
             
             console.log(listingID);
-            const listResponse = await axios.get(`http://localhost:8000/api/v1/listings/get-listing-detail/${listingID}`);
+            const listResponse = await axios.get(`https://faiyazestate.onrender.com/api/v1/listings/get-listing-detail/${listingID}`);
             const listResponseData = listResponse.data;
             if(!listResponseData.success){
                 console.log("Error in geting the listing details");
@@ -132,7 +132,7 @@ export const UpdateListing = ()=>{
 
             setLoading(true);
             setError(null);
-            const res = await axios.post(`http://localhost:8000/api/v1/listings/update-listing/${listingID}`, formData, {
+            const res = await axios.post(`https://faiyazestate.onrender.com/api/v1/listings/update-listing/${listingID}`, formData, {
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`

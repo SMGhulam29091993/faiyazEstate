@@ -70,7 +70,7 @@ export const UpdateProfile = ()=>{
         try {
             dispatch(updateUserStart());
             const res = await axios.put(
-                `http://localhost:8000/api/v1/user/update/${currentUser.user?._id || currentUser._id}`,
+                `https://faiyazestate.onrender.com/api/v1/user/update/${currentUser.user?._id || currentUser._id}`,
                 formData,
                 {
                     headers: {
@@ -122,7 +122,7 @@ export const UpdateProfile = ()=>{
           })
           dispatch(deleteAvatarStart());
           const res = await axios.put(
-              `http://localhost:8000/api/v1/user/update/${currentUser.user?._id || currentUser._id}`,
+              `https://faiyazestate.onrender.com/api/v1/user/update/${currentUser.user?._id || currentUser._id}`,
               formData,
               {
                   headers: {
