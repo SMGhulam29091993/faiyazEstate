@@ -16,7 +16,7 @@ const app = express();
 
 
 // middleware
-const allowedOrigins = ["https://faiyaz-estate.onrender.com"];
+const allowedOrigins = ["https://faiyaz-estate-5pm5.onrender.com"];
 
 app.use(
   cors({
