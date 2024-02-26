@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaBars} from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import { userSelector } from '../redux/user/userSlice';
+import Dropdown from './DropDown';
 
 
 
@@ -12,6 +13,11 @@ const Header = ()=>{
     const navigate = useNavigate();
     const location = useLocation();
     console.log(searchTerm)
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -49,15 +55,20 @@ const Header = ()=>{
                         
                     </form>
                     <ul className='flex gap-4'>
+                        <li><FaBars className="block md:hidden text-white" onClick={toggleMenu} /></li>
+                        {showMenu?(<Dropdown currentUser={currentUser}/>):(
+
+                       <>
+                       
                         <Link to="/">
-                            <li className='hidden sm:inline font-semibold hover:underline cursor-pointer text-white'>Home</li>
+                            <li className='hidden md:inline font-semibold hover:underline cursor-pointer text-white'>Home</li>
                         </Link>
                         <Link to="/about">
-                            <li className='hidden sm:inline font-semibold hover:underline cursor-pointer text-white'>About</li>
+                            <li className='hidden md:inline font-semibold hover:underline cursor-pointer text-white'>About</li>
                         </Link>                        
                         <Link to="/profile">
                             {currentUser ? (
-                                <li className=' sm:inline font-semibold hover:underline cursor-pointer text-white flex justify-between'>
+                                <li className='hidden md:inline font-semibold hover:underline cursor-pointer text-white flex justify-between'>
                                     {currentUser.user?.avatar || currentUser.avatar?(
                                         <img src={currentUser.user?.avatar || currentUser.avatar} 
                                         alt="Profile" className='w-7 h-7 rounded-full'/>
@@ -71,6 +82,8 @@ const Header = ()=>{
                                 <li className='text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
                             )}
                         </Link>
+                        </>
+                         )}
                     </ul>                    
                 </div>
                 
