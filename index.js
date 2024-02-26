@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
-PORT = 8000 || process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const db = require("./config/mongoose");
 const errorMiddleware = require("./config/errorHandlingMiddleware.js")
 const cookieParser = require("cookie-parser");

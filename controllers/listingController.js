@@ -65,17 +65,17 @@ module.exports.get_listings = async (req,res,next)=>{
 
         let offer = req.query.offer;
         if(offer === undefined || offer === 'false'){
-            offer = {$in:[true,false]};
+            offer = {$in:[false,true]};
         }
 
         let furnished = req.query.furnished;
         if(furnished === undefined || furnished=== 'false'){
-            furnished = {$in:[true,false]};
+            furnished = {$in:[false,true]};
         }
 
         let parking = req.query.parking;
         if(parking === undefined || parking === 'false'){
-            parking = {$in:[true,false]};
+            parking = {$in:[false,true]};
         }
 
         let type = req.query.type;
@@ -93,12 +93,7 @@ module.exports.get_listings = async (req,res,next)=>{
             furnished,
             parking,
             type
-        }).sort({[sort] : order}).limit(limit).skip(startIndex);
-
-        if(listings.length === 0){
-            res.status(401).send({message : "No Listing Found", success : false});
-            return;
-        }
+        }).sort({[sort] : order}).limit(limit).skip(startIndex);       
         res.status(200).send({message : "Here are your listings", success : true, listings});
     } catch (error) {
         next(error);
