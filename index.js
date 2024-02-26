@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config()
 const bodyParser = require("body-parser");
 require("colors");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const cors = require("cors");
 const PORT = process.env.PORT || 8000;
 const db = require("./config/mongoose");
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(cookieParser());
 // app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({extended : false}))
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 
 app.use(errorMiddleware);
 
