@@ -33,8 +33,8 @@ const Contact = ({listing}) => {
     
     const sendEmail = (e) => {
         e.preventDefault();
-        const Service_ID = 'service_v6zetpw';
-        const Template_ID = 'template_7xnpkif';
+        const Service_ID = 'service_h5n56ws';
+        const Template_ID = 'template_g3r4nrg';
         const User_ID = "LJ5yC_mxqWCaE54T-";
         const templateParams = {
             subject : `Regarding ${listing.name}`,
