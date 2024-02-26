@@ -79,7 +79,7 @@ const Header = ()=>{
                                 
                                 </li>
                             ) : (
-                                <li className='hidden sm:text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
+                                <li className='hidden sm:inline text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
                             )}
                         </Link>
                         </>
