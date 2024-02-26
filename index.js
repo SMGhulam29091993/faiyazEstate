@@ -16,7 +16,7 @@ const app = express();
 
 
 // middleware
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["https://faiyaz-estate.onrender.com"];
 
 app.use(
   cors({
