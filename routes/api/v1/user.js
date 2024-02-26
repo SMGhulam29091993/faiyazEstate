@@ -4,7 +4,9 @@ const userController = require("../../../controllers/userController.js");
 const { verifyUser } = require("../../../utils/verifyUser.js");
 
 
-
+router.get("/test", (req,res)=>{
+    res.status(200).send({message : "The Backend is working!!"})
+})
 router.post("/sign-up", userController.register );
 router.post("/sign-in", userController.createSession);
 router.post("/googleAuth", userController.googleAuth);
