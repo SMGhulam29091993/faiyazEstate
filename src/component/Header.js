@@ -79,7 +79,9 @@ const Header = ()=>{
                                 
                                 </li>
                             ) : (
+                                <Link to={"/sign-in"}>
                                 <li className='text-white font-semibold hover:underline cursor-pointer '>Sign-In</li>
+                                </Link>
                             )}
                         </Link>
                         </>

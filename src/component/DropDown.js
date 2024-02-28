@@ -33,7 +33,7 @@ function Dropdown({ currentUser,toggleMenu }) {
                   )}
                 </Link>
               ) : (
-                <Link to="/signin"  onClick={toggleMenu}>
+                <Link to="/sign-in"  onClick={toggleMenu}>
                   Sign-In
                 </Link>
               )}
