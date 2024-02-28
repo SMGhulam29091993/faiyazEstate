@@ -56,7 +56,7 @@ const Header = ()=>{
                     </form>
                     <ul className='flex gap-4'>
                         <li><FaBars className="block md:hidden text-white" onClick={toggleMenu} /></li>
-                        {showMenu?(<Dropdown currentUser={currentUser}/>):(
+                        {showMenu?(<Dropdown currentUser={currentUser} toggleMenu={toggleMenu}/>):(
 
                        <>
                        

@@ -33,9 +33,9 @@ const Contact = ({listing}) => {
     
     const sendEmail = (e) => {
         e.preventDefault();
-        const Service_ID = 'service_h5n56ws';
-        const Template_ID = 'template_n5nl6rj';
-        const User_ID = "LJ5yC_mxqWCaE54T-";
+        const Service_ID = 'service_v6zetpw';
+        const Template_ID = 'template_7xnpkif';
+        const User_ID = "kwc280HMCMCH8Nu23";
         const templateParams = {
             subject : `Regarding ${listing.name}`,
             from_name: currentUser.username || currentUser.user?.username, // Change to the name of the sender
