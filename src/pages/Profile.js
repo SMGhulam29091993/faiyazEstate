@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
+
 export const Profile = ()=>{
     const {currentUser, token,loading} = useSelector(userSelector);
     const dispatch = useDispatch();
@@ -12,6 +13,8 @@ export const Profile = ()=>{
     console.log("Token :: ", token);
     const [errorShowListing, setErrorshowListing] = useState(null)
     const [userListing,setUserListing] = useState([]);
+
+    const user_id = currentUser.user?(currentUser.user._id) : (currentUser._id);
 
     const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
@@ -25,7 +28,7 @@ export const Profile = ()=>{
         try {
             dispatch(deleteStart());
            
-            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/user/delete/${currentUser._id}`,{
+            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/user/delete/${user_id}`,{
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`

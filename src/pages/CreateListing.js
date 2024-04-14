@@ -124,7 +124,7 @@ export const CreateList = ()=>{
             const responseData = res.data;
             console.log(responseData);
             if (!responseData.success) {
-                throw new Error(responseData.message);
+                console.log(responseData.message);
             }
             setLoading(false);
             setError(null);
