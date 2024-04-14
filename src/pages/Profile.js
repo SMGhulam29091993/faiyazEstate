@@ -15,7 +15,7 @@ export const Profile = ()=>{
     const [userListing,setUserListing] = useState([]);
 
     const user_id = currentUser && currentUser.user ? currentUser.user._id : currentUser ? currentUser._id : null;
-
+    console.log(`User_id for profile ${user_id}`);
 
     const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
