@@ -14,9 +14,8 @@ export const Profile = ()=>{
     const [errorShowListing, setErrorshowListing] = useState(null)
     const [userListing,setUserListing] = useState([]);
 
-    const user_id = currentUser && currentUser.user ? currentUser.user._id : currentUser ? currentUser._id : null;
-    console.log(`User_id for profile ${user_id}`);
-
+    const user_id = currentUser && currentUser.user? currentUser.user._id : currentUser? currentUser._id : null
+    console.log(`User id : ${user_id}`);
     const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
     };
@@ -29,7 +28,7 @@ export const Profile = ()=>{
         try {
             dispatch(deleteStart());
            
-            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/user/delete/${user_id}`,{
+            const res = await axios.delete(`https://faiyazestate.onrender.com/api/v1/user/delete/${currentUser._id}`,{
                 headers : {
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`
@@ -105,7 +104,7 @@ export const Profile = ()=>{
 
     const showListing = async ()=>{
         try {
-            const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/user/get-listing/${currentUser._id}`,{
+            const res = await axios.get(`https://faiyazestate.onrender.com/api/v1/user/get-listing/${user_id}`,{
                 headers:{
                     "Content-Type" : "application/json",
                     Authorization : `Bearer ${token}`
