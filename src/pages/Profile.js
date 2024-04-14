@@ -14,7 +14,8 @@ export const Profile = ()=>{
     const [errorShowListing, setErrorshowListing] = useState(null)
     const [userListing,setUserListing] = useState([]);
 
-    const user_id = currentUser.user?(currentUser.user._id) : (currentUser._id);
+    const user_id = currentUser && currentUser.user ? currentUser.user._id : currentUser ? currentUser._id : null;
+
 
     const handleUpdateNavigate = ()=>{        
         navigate("/update-profile")
